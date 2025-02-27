@@ -1,0 +1,12 @@
+---
+detectors:
+  IrresponsibleModule:
+    enabled: false
+  TooManyStatements:
+    max_statements: 6
+
+exclude_paths:
+  - "bin/**/*"
+  - "vendor/**/*"
+  - "db/**/*"
+  - "config/**/*"

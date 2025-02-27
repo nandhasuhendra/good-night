@@ -45,5 +45,8 @@ group :development, :test do
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
 
+  # Static analysis for code smells
+  gem 'reek', '~> 6.4'
+
   gem "dotenv-rails", "~> 3.1"
 end
