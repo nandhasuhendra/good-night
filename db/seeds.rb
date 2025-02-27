@@ -9,9 +9,16 @@
 #   end
 
 [
-  { name: "Alice" },
-  { name: "Bob" },
-  { name: "Charlie" },
-  { name: "David" },
-  { name: "Eve" }
-].each { |user| User.find_or_create_by!(user) }
+  { name: "Alice", password: "password", password_confirmation: "password" },
+  { name: "Bob", password: "password", password_confirmation: "password" },
+  { name: "Charlie", password: "password", password_confirmation: "password" },
+  { name: "David", password: "password", password_confirmation: "password" },
+  { name: "Eve", password: "password", password_confirmation: "password" },
+].each do |user|
+  User.find_or_create_by!(name: user[:name]) do |u|
+      u.password = user[:password]
+      u.password_confirmation = user[:password_confirmation]
+  end
+end
+
+puts "Seeded users finished"
