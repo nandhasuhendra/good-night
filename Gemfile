@@ -16,9 +16,9 @@ gem "bcrypt", "~> 3.1.7"
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
 # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
-gem "solid_cache"
-gem "solid_queue"
-gem "solid_cable"
+# gem "solid_cache"
+# gem "solid_queue"
+# gem "solid_cable"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
@@ -51,4 +51,8 @@ group :development, :test do
   gem "dotenv-rails", "~> 3.1"
 end
 
-gem 'jwt', '~> 2.10', '>= 2.10.1'
+# User authentication with JSON Web Tokens for security reason
+gem "jwt", "~> 2.10", ">= 2.10.1"
+
+# Use Redis adapter for Active Job and Caching
+gem "redis", "~> 5.4"
