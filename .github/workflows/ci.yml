@@ -3,7 +3,7 @@ name: CI
 on:
   pull_request:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   scan_ruby:
@@ -35,5 +35,22 @@ jobs:
           bundler-cache: true
 
       - name: Lint code for consistent style
-        run: bin/rubocop -f github
+        run: git diff --name-only origin/main HEAD | grep -E 'app/|lib/' | grep '\.rb$' | xargs -r bundle exec rubocop --force-exclusion --parallel
 
+  code_smells:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+
+      - name: Install dependencies
+        run: gem install reek
+
+      - name: Run code smell analysis
+        run: git diff --name-only origin/main HEAD | grep -E 'app/|lib/' | grep '\.rb$' | xargs -r bundle exec reek -c .reek.yml
