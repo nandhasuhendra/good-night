@@ -1,6 +1,7 @@
-api:
-  error_messages:
-    invalid_email_or_password: "invalid email or password"
-    invalid_token: "invalid authentication token"
-    invalid_acceptable_format: "cannot accept request with invalid content type"
-    invalid_json_format: "cannot accept request with invalid JSON format"
+en:
+  api:
+    error_messages:
+      invalid_email_or_password: "invalid email or password"
+      invalid_token: "invalid authentication token"
+      invalid_acceptable_format: "cannot accept request with invalid content type"
+      invalid_json_format: "cannot accept request with invalid JSON format"
