@@ -50,7 +50,7 @@ jobs:
           bundler-cache: true
 
       - name: Install dependencies
-        run: bundle install reek
+        run: gem install reek
 
       - name: Run code smell analysis
         run: git diff --name-only origin/main HEAD | grep -E 'app/|lib/' | grep '\.rb$' | xargs -r bundle exec reek -c .reek.yml
