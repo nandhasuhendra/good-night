@@ -3,6 +3,7 @@ class ApplicationController < ActionController::API
   before_action :authenticate_token
 
   rescue_from ActionDispatch::Http::Parameters::ParseError, with: :handle_json_parse_error
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def authenticate_token
     token = request.headers["Authorization"]&.split(" ")&.last
@@ -30,5 +31,9 @@ class ApplicationController < ActionController::API
 
   def handle_json_parse_error
     render json: { error: I18n.t("api.error_messages.invalid_json_format") }, status: :bad_request
+  end
+
+  def record_not_found
+    render json: { error: I18n.t("api.error_messages.record_not_found") }, status: :not_found
   end
 end
