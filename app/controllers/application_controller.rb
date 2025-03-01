@@ -5,6 +5,10 @@ class ApplicationController < ActionController::API
   rescue_from ActionDispatch::Http::Parameters::ParseError, with: :handle_json_parse_error
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
+  def default_url_options(options={})
+    { locale: I18n.locale }
+  end
+
   def authenticate_token
     token = request.headers["Authorization"]&.split(" ")&.last
     decoded_token = JsonWebToken.decode(token)
