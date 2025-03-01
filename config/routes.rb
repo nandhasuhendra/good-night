@@ -12,8 +12,19 @@ Rails.application.routes.draw do
     namespace :v1 do
       post :login, to: "session#create"
 
-      resource :user
-      resources :users
+      resource :user do
+        collection do
+          get :followings, to: "user/followings#index"
+          get :followers, to: "user/followers#index"
+        end
+      end
+
+      resources :users, only: %i[index show] do
+        member do
+          post :follow, to: "users/follows#create", as: :follow
+          delete :unfollow, to: "users/follows#destroy", as: :unfollow
+        end
+      end
     end
   end
 end
