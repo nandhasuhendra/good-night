@@ -14,23 +14,20 @@ Rails.application.routes.draw do
 
       resource :user do
         collection do
-          scope module: :user do
-            get :followings, to: "followings#index"
-            get :followers, to: "followers#index"
-            post :clock_in, to: "sleep_records#create"
-            patch :clock_out, to: "sleep_records#update"
-          end
+          get :followings, to: "user/followings#index"
+          get "followings/sleep_histories", to: "user/sleep_histories#index" # Only followed by user can see the sleep histories
+
+          get :followers, to: "user/followers#index"
+          post :clock_in, to: "user/sleep_records#create"
+          patch :clock_out, to: "user/sleep_records#update"
         end
       end
 
       resources :users, only: %i[index show] do
         member do
-          scope module: :users do
-            post :follow, to: "follows#create"
-            delete :unfollow, to: "follows#destroy"
-            post :clock_in, to: "sleep_records#create"
-            patch :clock_out, to: "sleep_records#update"
-          end
+          post :follow, to: "users/follows#create"
+          delete :unfollow, to: "users/follows#destroy"
+          get :sleep_histories, to: "users/sleep_histories#index"
         end
       end
     end
