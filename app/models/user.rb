@@ -3,6 +3,6 @@ class User < ApplicationRecord
 
   validates :name, presence: true, uniqueness: true
 
-  has_many :follows, foreign_key: :follower_id, dependent: :destroy
-  has_many :followings, through: :follows, source: :followed
+  has_many :followers, foreign_key: :follower_id, class_name: "Follow", dependent: :destroy
+  has_many :followings, foreign_key: :followed_id, class_name: "Follow", dependent: :destroy
 end
