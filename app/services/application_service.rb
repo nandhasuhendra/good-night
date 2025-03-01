@@ -1,7 +1,8 @@
 class ApplicationService
   include ResultHandler
+  include ErrorMessages
 
-  def self.call(*args, &block)
-    new(*args, &block).call
+  def self.call(*args)
+    new(*args).call
   end
 end
