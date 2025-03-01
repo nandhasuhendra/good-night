@@ -6,6 +6,7 @@ en:
       invalid_token: "invalid authentication token"
       invalid_acceptable_format: "cannot accept request with invalid content type"
       invalid_json_format: "cannot accept request with invalid JSON format"
+      internal_server_error: "something went wrong, please try again later"
 
   errors:
     messages:
