@@ -14,15 +14,23 @@ Rails.application.routes.draw do
 
       resource :user do
         collection do
-          get :followings, to: "user/followings#index"
-          get :followers, to: "user/followers#index"
+          scope module: :user do
+            get :followings, to: "followings#index"
+            get :followers, to: "followers#index"
+            post :clock_in, to: "sleep_records#create"
+            patch :clock_out, to: "sleep_records#update"
+          end
         end
       end
 
       resources :users, only: %i[index show] do
         member do
-          post :follow, to: "users/follows#create", as: :follow
-          delete :unfollow, to: "users/follows#destroy", as: :unfollow
+          scope module: :users do
+            post :follow, to: "follows#create"
+            delete :unfollow, to: "follows#destroy"
+            post :clock_in, to: "sleep_records#create"
+            patch :clock_out, to: "sleep_records#update"
+          end
         end
       end
     end
