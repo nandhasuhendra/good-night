@@ -38,6 +38,7 @@ gem "thruster", require: false
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
+  gem "pry-rails"
 
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", require: false
@@ -56,3 +57,6 @@ gem "jwt", "~> 2.10", ">= 2.10.1"
 
 # Use Redis adapter for Active Job and Caching
 gem "redis", "~> 5.4"
+
+# Agnostic pagination in plain ruby. It does it all. Better.
+gem 'pagy', '~> 9.3', '>= 9.3.3'

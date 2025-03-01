@@ -4,7 +4,7 @@ module API
       skip_before_action :authenticate_token, only: :create
 
       def create
-        user = User.find_by(name: params[:name])
+        user = ::User.find_by(name: params[:name])
         if !user&.authenticate(params[:password])
           render json: { error: I18n.t("api.error_messages.invalid_email_or_password") }, status: :unauthorized
           return
