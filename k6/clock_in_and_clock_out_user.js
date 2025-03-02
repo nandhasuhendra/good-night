@@ -47,10 +47,26 @@ export default function () {
   };
 
   let clockInRes = http.post(CLOCK_IN, null, params);
-  check(clockInRes, { "clock in success": (res) => res.status === 200 });
+  check(clockInRes, {
+    "clock in success": (res) => {
+      if (res.status !== 200) {
+        console.log(res.status, res.body);
+      }
+
+      res.status === 200;
+    },
+  });
   sleep(2);
 
   let clockOutRes = http.patch(CLOCK_OUT, null, params);
-  check(clockOutRes, { "clock out success": (res) => res.status === 200 });
+  check(clockOutRes, {
+    "clock out success": (res) => {
+      if (res.status !== 200) {
+        console.log(res.status, res.body);
+      }
+
+      res.status === 200;
+    },
+  });
   sleep(1);
 }
