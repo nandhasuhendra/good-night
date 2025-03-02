@@ -50,6 +50,9 @@ group :development, :test do
   gem "reek", "~> 6.4"
 
   gem "dotenv-rails", "~> 3.1"
+
+  # Annotates Rails/ActiveRecord Models, routes, fixtures, and others based on the database schema.
+  gem 'annotate', '~> 2.6'
 end
 
 # User authentication with JSON Web Tokens for security reason
