@@ -11,7 +11,7 @@ module Friends
         follow.destroy!
         handler_success(nil)
       rescue ActiveRecord::RecordNotFound
-        handler_failure(en_follow_not_found)
+        handler_failure(em_follow_not_found)
       end
     end
   end
