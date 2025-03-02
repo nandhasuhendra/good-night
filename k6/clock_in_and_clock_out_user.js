@@ -1,17 +1,15 @@
 import http from "k6/http";
 import { check, sleep } from "k6";
-import { Trend } from "k6/metrics";
 import { randomIntBetween } from "https://jslib.k6.io/k6-utils/1.2.0/index.js";
 
 const BASE_URL = "http://localhost:3000/api/v1";
 const LOGIN_URL = `${BASE_URL}/login`;
+const CLOCK_IN = `${BASE_URL}/user/clock_in`;
+const CLOCK_OUT = `${BASE_URL}/user/clock_out`;
 
-let followTrend = new Trend("follow_request_duration");
-let unfollowTrend = new Trend("unfollow_request_duration");
-
-export let options = {
+export const options = {
   vus: 100,
-  duration: "30s",
+  duration: "60s",
 };
 
 function login(userID) {
@@ -38,12 +36,7 @@ function login(userID) {
 
 export default function () {
   let userID = randomIntBetween(1, 1000);
-  let targetID = randomIntBetween(1, 1000);
   let token = login(userID);
-
-  while (userID === targetID) {
-    targetID = randomIntBetween(1, 1000);
-  }
 
   let params = {
     headers: {
@@ -53,23 +46,11 @@ export default function () {
     },
   };
 
-  let respones = Promise.all([
-    http.post(`${BASE_URL}/users/${targetID}/follow`, null, params),
-    http.del(`${BASE_URL}/users/${targetID}/unfollow`, null, params),
-  ]);
+  let clockInRes = http.post(CLOCK_IN, null, params);
+  check(clockInRes, { "clock in success": (res) => res.status === 200 });
+  sleep(2);
 
-  respones.then(([followRes, unfollowRes]) => {
-    followTrend.add(followRes.timings.duration);
-    unfollowTrend.add(unfollowRes.timings.duration);
-
-    check(followRes, {
-      "follow request success": (r) => r.status === 201,
-    });
-
-    check(unfollowRes, {
-      "unfollow request success": (r) => r.status === 204,
-    });
-  });
-
+  let clockOutRes = http.patch(CLOCK_OUT, null, params);
+  check(clockOutRes, { "clock out success": (res) => res.status === 200 });
   sleep(1);
 }
