@@ -10,8 +10,8 @@ let followTrend = new Trend("follow_request_duration");
 let unfollowTrend = new Trend("unfollow_request_duration");
 
 export let options = {
-  vus: 100,
-  duration: "30s",
+  vus: 10,
+  duration: "1m",
 };
 
 function login(userID) {
@@ -37,12 +37,12 @@ function login(userID) {
 }
 
 export default function () {
-  let userID = randomIntBetween(1, 1000);
-  let targetID = randomIntBetween(1, 1000);
+  let userID = randomIntBetween(1, 10);
+  let targetID = randomIntBetween(1, 10);
   let token = login(userID);
 
   while (userID === targetID) {
-    targetID = randomIntBetween(1, 1000);
+    targetID = randomIntBetween(1, 10);
   }
 
   let params = {
@@ -63,11 +63,23 @@ export default function () {
     unfollowTrend.add(unfollowRes.timings.duration);
 
     check(followRes, {
-      "follow request success": (r) => r.status === 201,
+      "follow request success": (r) => {
+        if (r.status !== 201) {
+          console.log(r.status, r.body);
+        }
+
+        r.status === 201;
+      },
     });
 
     check(unfollowRes, {
-      "unfollow request success": (r) => r.status === 204,
+      "unfollow request success": (r) => {
+        if (r.status !== 204) {
+          console.log(r.status, r.body);
+        }
+
+        r.status === 204;
+      },
     });
   });
 

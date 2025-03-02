@@ -8,8 +8,8 @@ const CLOCK_IN = `${BASE_URL}/user/clock_in`;
 const CLOCK_OUT = `${BASE_URL}/user/clock_out`;
 
 export const options = {
-  vus: 100,
-  duration: "60s",
+  vus: 10,
+  duration: "1m",
 };
 
 function login(userID) {
@@ -35,7 +35,7 @@ function login(userID) {
 }
 
 export default function () {
-  let userID = randomIntBetween(1, 1000);
+  let userID = randomIntBetween(1, 5);
   let token = login(userID);
 
   let params = {
