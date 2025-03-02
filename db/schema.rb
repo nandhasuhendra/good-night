@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_02_134407) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_01_183449) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -20,17 +20,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_02_134407) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["following_id", "followed_id"], name: "idx_follows_following_id_followed_id", unique: true
-  end
-
-  create_table "report_sleep_histories", force: :cascade do |t|
-    t.date "week_start", null: false
-    t.integer "total_hours", null: false
-    t.integer "average_hours", null: false
-    t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id", "week_start"], name: "index_report_sleep_histories_on_user_id_and_week_start", unique: true
-    t.index ["user_id"], name: "index_report_sleep_histories_on_user_id"
   end
 
   create_table "sleep_records", force: :cascade do |t|
@@ -52,6 +41,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_02_134407) do
     t.index ["name"], name: "idx_users_on_name", unique: true
   end
 
-  add_foreign_key "report_sleep_histories", "users"
   add_foreign_key "sleep_records", "users"
 end
