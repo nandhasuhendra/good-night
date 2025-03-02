@@ -23,7 +23,7 @@ class SleepRecord < ApplicationRecord
   validates :user_id, uniqueness: { scope: :clock_in }
   validate :active_clock_in_exist, on: :create
 
-  before_commit :set_duration
+  before_save :set_duration
 
   private
 
