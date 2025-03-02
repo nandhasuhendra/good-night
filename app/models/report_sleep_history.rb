@@ -2,12 +2,13 @@
 #
 # Table name: report_sleep_histories
 #
-#  id          :integer          not null, primary key
-#  week_start  :date             not null
-#  total_hours :integer          not null
-#  user_id     :integer          not null
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
+#  id            :integer          not null, primary key
+#  week_start    :date             not null
+#  total_hours   :integer          not null
+#  average_hours :integer          not null
+#  user_id       :integer          not null
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
 #
 # Indexes
 #
@@ -18,8 +19,6 @@
 class ReportSleepHistory < ApplicationRecord
   belongs_to :user
 
-  has_many :sleep_histories,
-    ->(report) { where('DATE_TRUNC("week", clock_in)::DATE = ?', report.week_start) },
-    primary_key: :user_id,
-    foreign_key: :user_id
+  validates :user, :week_start, :total_hours, :average_hours, presence: true
+  validates :week_start, uniqueness: { scope: :user_id }
 end
