@@ -20,8 +20,6 @@ Rails.application.routes.draw do
 
           post :clock_in, to: "user/sleep_records#create"
           patch :clock_out, to: "user/sleep_records#update"
-
-          get :sleep_histories, to: "user/sleep_histories#index"
         end
       end
 
@@ -29,7 +27,6 @@ Rails.application.routes.draw do
         member do
           post :follow, to: "users/follows#create"
           delete :unfollow, to: "users/follows#destroy"
-          get :sleep_histories, to: "users/sleep_histories#index"
         end
       end
     end
