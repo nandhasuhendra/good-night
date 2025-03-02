@@ -13,6 +13,9 @@ module SleepRecords
         return handler_success(record: record) if record.save
 
         handler_failure(record.errors)
+
+        # TODO: Send the result to background job for weekly sleep report
+        ::Reports::CalculateWeeklySleepReportJob.perform_async(@user.id, record.id)
       end
     end
   end

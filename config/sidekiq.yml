@@ -1,0 +1,7 @@
+---
+:concurrency: 5
+production:
+  :concurrency: 10
+:queues:
+  - ["weekly_sleep_report", 3]
+  - ["default", 1]
