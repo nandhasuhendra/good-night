@@ -19,7 +19,9 @@
 class SleepRecord < ApplicationRecord
   belongs_to :user
 
-  validates :clock_in, presence: true, uniqueness: { scope: :user_id }
+  validates :user, :clock_in, presence: true
+  validates :user_id, uniqueness: { scope: :clock_in }
+  validate :active_clock_in_exist, on: :create
 
   before_commit :set_duration
 
@@ -28,6 +30,14 @@ class SleepRecord < ApplicationRecord
   def set_duration
     return unless clock_out.present?
 
-    self.duration = (clock_out - clock_in).to_i
+    self.sleep_duration = (clock_out - clock_in).to_i
+  end
+
+  def active_clock_in_exist
+    return unless user.present?
+
+    if SleepRecord.exists?(user_id: user_id, clock_out: nil)
+      errors.add(:clock_in, I18n.t("errors.messages.sleep_record.active_sleep_record_exist"))
+    end
   end
 end

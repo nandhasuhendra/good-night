@@ -13,3 +13,6 @@ en:
       follow:
         not_found: "data not found"
         cannot_follow_yourself: "cannot follow yourself"
+      sleep_record:
+        not_found: "data not found"
+        active_sleep_record_exist: "you have an active sleep record"
