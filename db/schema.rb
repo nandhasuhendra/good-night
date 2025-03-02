@@ -25,6 +25,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_02_134407) do
   create_table "report_sleep_histories", force: :cascade do |t|
     t.date "week_start", null: false
     t.integer "total_hours", null: false
+    t.integer "average_hours", null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

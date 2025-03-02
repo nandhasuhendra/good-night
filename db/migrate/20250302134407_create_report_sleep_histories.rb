@@ -4,6 +4,7 @@ class CreateReportSleepHistories < ActiveRecord::Migration[8.0]
       t.bigint :id, primary_key: true, null: false
       t.date :week_start, null: false
       t.integer :total_hours, null: false
+      t.integer :average_hours, null: false
       t.references :user, null: false, foreign_key: true
 
       t.timestamps
