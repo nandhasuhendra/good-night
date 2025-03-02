@@ -49,7 +49,7 @@ end
 %w[Alice Bob Charlie David Eve].each do |name|
   puts "Seeding sleep records for #{name}"
   1_000.times do |i|
-    SleepRecord.create!(user_id: User.find_by(name: name).id, clock_in: Time.now - i.day, clock_out: Time.now - i.day + rand(8).hours)
+    SleepRecord.create!(user_id: User.find_by(name: name).id, clock_in: Time.now - i.day, clock_out: Time.now - i.day + rand(1..8).hours)
   end
   puts "Seeding sleep records for #{name} finished"
 end
