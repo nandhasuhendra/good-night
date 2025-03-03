@@ -1,4 +1,5 @@
 ActiveSupport::Notifications.subscribe("follow.changed") do |_name, _start, _finish, _id, payload|
+  ::Friends::CleanUpCacheService.call(payload[:user])
   ::SleepRecords::CleanUpHistoryCacheService.call(payload[:user])
 end
 
