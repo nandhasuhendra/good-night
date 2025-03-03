@@ -310,6 +310,12 @@ GEM
       rubocop-rails (>= 2.30)
     ruby-progressbar (1.13.0)
     securerandom (0.4.1)
+    sidekiq (7.3.9)
+      base64
+      connection_pool (>= 2.3.0)
+      logger
+      rack (>= 2.2.4)
+      redis-client (>= 0.22.2)
     sshkit (1.24.0)
       base64
       logger
@@ -368,6 +374,7 @@ DEPENDENCIES
   redis (~> 5.4)
   reek (~> 6.4)
   rubocop-rails-omakase
+  sidekiq (~> 7.3, >= 7.3.9)
   thruster
   tzinfo-data
 

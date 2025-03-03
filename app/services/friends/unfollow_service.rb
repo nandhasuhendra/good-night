@@ -9,11 +9,9 @@ module Friends
       ActiveRecord::Base.transaction do
         follow = Follow.find_by!(following_id: @user.id, followed_id: @followee.id)
         follow.destroy!
-        Rails.cache.delete("user_#{@user.id}_followers")
-        Rails.cache.delete("user_#{@user.id}_following")
         handler_success(nil)
       rescue ActiveRecord::RecordNotFound
-        handler_failure(en_follow_not_found)
+        handler_failure(em_follow_not_found)
       end
     end
   end

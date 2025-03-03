@@ -44,5 +44,8 @@ module GoodNight
     # Additional application setup
     config.active_record.default_timezone = :local
     config.i18n.default_locale = :en
+
+    # Active Job configuration
+    config.active_job.queue_adapter = :sidekiq
   end
 end

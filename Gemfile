@@ -63,3 +63,6 @@ gem "redis", "~> 5.4"
 
 # Agnostic pagination in plain ruby. It does it all. Better.
 gem 'pagy', '~> 9.3', '>= 9.3.3'
+
+# Use Sidekiq for background job processing
+gem 'sidekiq', '~> 7.3', '>= 7.3.9'
