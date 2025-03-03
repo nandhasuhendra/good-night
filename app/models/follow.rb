@@ -21,9 +21,15 @@ class Follow < ApplicationRecord
   validates :following_id, uniqueness: { scope: :followed_id }
   validate :cannot_follow_yourself
 
+  after_commit :publish_event
+
   private
 
   def cannot_follow_yourself
     errors.add(:following_id, I18n.t("errors.messages.follow.cannot_follow_yourself")) if following_id == followed_id
+  end
+
+  def publish_event
+    ActiveSupport::Notifications.instrument("sleep_record.changed", record: self, user: self.follower)
   end
 end
