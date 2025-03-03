@@ -36,7 +36,7 @@ module SleepRecords
     def fetch_sleep_histories
       return Rails.cache.read(cache_key) if Rails.cache.exist?(cache_key)
 
-      following_user_ids = @user.following.pluck(:id)
+      following_user_ids = UserRepository.following_ids(@user)
       return [] if following_user_ids.blank?
 
       sleep_histories = fetch_data_from_database(following_user_ids)
@@ -50,19 +50,10 @@ module SleepRecords
 
       # Use batch processing to avoid SQL issue `WHERE attr_ids IN (...) Too many` fetching all sleep records at once
       following_user_ids.each_slice(BATCH_SIZE) do |user_ids|
-        sleep_records += fetch_data_from_database_query(user_ids)
+        sleep_records += SleepRecordRepository.weekly_histories_by_user_ids(user_ids, @week_start)
       end
 
       sleep_records.sort_by! { |record| -record.sleep_duration.to_i }
-    end
-
-    def fetch_data_from_database_query(user_ids)
-      SleepRecord
-        .joins(:user)
-        .select("users.name AS user_name", "sleep_records.*")
-        .where(user_id: user_ids)
-        .where("clock_in::DATE >= ? AND clock_in::DATE < ?", @week_start, @week_start + 7.days)
-        .order(sleep_duration: :desc)
     end
   end
 end

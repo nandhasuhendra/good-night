@@ -7,8 +7,7 @@ module Friends
 
     def call
       ActiveRecord::Base.transaction do
-        follow = Follow.find_by!(following_id: @user.id, followed_id: @followee.id)
-        follow.destroy!
+        follow = FollowRepository.find_and_destroy!(@user.id, @followee.id)
         handler_success(nil)
       rescue ActiveRecord::RecordNotFound
         handler_failure(em_follow_not_found)
