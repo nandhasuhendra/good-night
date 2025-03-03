@@ -228,7 +228,7 @@ API endpoint: `GET /api/v1/user/following/sleep_histories`
 ### Request
 
 ```bash
-curl -X GET http://localhost:3000/api/v1/user/following/sleep_histories \
+curl -X GET http://localhost:3000/api/v1/user/following/sleep_histories?page=1&per_page=5 \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer <token>"
