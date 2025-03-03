@@ -13,10 +13,7 @@ module Friends
         return handler_failure(@followee) if existing_follow.present?
 
         follow = Follow.new(following_id: @user.id, followed_id: @followee.id)
-
-        if follow.save!
-          handler_success(follow) 
-        end
+        handler_success(follow) if follow.save!
       rescue ActiveRecord::RecordInvalid => e
         handler_failure(e.record.errors)
       end
