@@ -9,7 +9,7 @@ module Friends
       ActiveRecord::Base.transaction do
         return handler_failure(@followee.errors) if @followee.errors.any?
 
-        existing_follow = Follow.where(following_id: @user.id, followed_id: @followee.id).lock('FOR UPDATE').last
+        existing_follow = FollowRepository.find_existing_follow_with_lock(@user.id, @followee.id)
         return handler_failure(@followee) if existing_follow.present?
 
         follow = Follow.new(following_id: @user.id, followed_id: @followee.id)
