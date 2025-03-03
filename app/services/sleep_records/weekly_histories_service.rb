@@ -13,7 +13,7 @@ module SleepRecords
     def call
       sleep_histories = fetch_sleep_histories
       Rails.cache.write(cache_key, sleep_histories, expires_in: 1.hour)
-      pagy, sleep_histories = pagy_array(sleep_histories, page: page, items: per_page)
+      pagy, sleep_histories = pagy_array(sleep_histories, page: page, limit: per_page)
 
       { pagy: pagy, sleep_histories: sleep_histories }
     end
