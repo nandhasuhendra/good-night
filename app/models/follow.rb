@@ -30,6 +30,6 @@ class Follow < ApplicationRecord
   end
 
   def publish_event
-    ActiveSupport::Notifications.instrument("sleep_record.changed", record: self, user: self.follower)
+    ActiveSupport::Notifications.instrument("follow.changed", record: self, user: self.follower)
   end
 end
