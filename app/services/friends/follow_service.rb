@@ -10,15 +10,10 @@ module Friends
         return handler_failure(@followee.errors) if @followee.errors.any?
 
         existing_follow = Follow.where(following_id: @user.id, followed_id: @followee.id).lock('FOR UPDATE').last
-        return handler_success(@followee) if existing_follow.present?
+        return handler_failure(@followee) if existing_follow.present?
 
         follow = Follow.new(following_id: @user.id, followed_id: @followee.id)
-
-        if follow.save!
-          Rails.cache.delete("user_#{@user.id}_followers")
-          Rails.cache.delete("user_#{@user.id}_following")
-          handler_success(follow) 
-        end
+        handler_success(follow) if follow.save!
       rescue ActiveRecord::RecordInvalid => e
         handler_failure(e.record.errors)
       end

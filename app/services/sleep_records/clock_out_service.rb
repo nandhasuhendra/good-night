@@ -10,9 +10,9 @@ module SleepRecords
         return handler_failure(em_sleep_records_not_found) unless record
 
         record.update(clock_out: Time.zone.now)
-        return handler_success(record: record) if record.save
+        return handler_failure(record.errors.messages) unless record.save
 
-        handler_failure(record.errors)
+        handler_success(record: record)
       end
     end
   end

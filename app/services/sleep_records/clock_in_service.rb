@@ -7,9 +7,9 @@ module SleepRecords
     def call
       ActiveRecord::Base.transaction do
         record = SleepRecord.new(user: @user, clock_in: Time.zone.now)
-        return handler_success(record: record) if record.save
+        return handler_failure(record.errors.messages) unless record.save
 
-        handler_failure(record.errors.messages)
+        handler_success(record: record)
       end
     end
   end

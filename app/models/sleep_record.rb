@@ -23,7 +23,8 @@ class SleepRecord < ApplicationRecord
   validates :user_id, uniqueness: { scope: :clock_in }
   validate :active_clock_in_exist, on: :create
 
-  before_commit :set_duration
+  before_save :set_duration
+  after_commit :publish_event
 
   private
 
@@ -39,5 +40,9 @@ class SleepRecord < ApplicationRecord
     if SleepRecord.exists?(user_id: user_id, clock_out: nil)
       errors.add(:clock_in, I18n.t("errors.messages.sleep_record.active_sleep_record_exist"))
     end
+  end
+
+  def publish_event
+    ActiveSupport::Notifications.instrument("follow.changed", record: self, user: self.user)
   end
 end
