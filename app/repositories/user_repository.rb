@@ -6,4 +6,8 @@ class UserRepository
   def self.following(user, order_by: :desc)
     user.following.order(created_at: order_by)
   end
+
+  def self.following_ids(user, order_by: :desc)
+    user.following.order(created_at: order_by).pluck(:id)
+  end
 end
