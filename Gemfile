@@ -62,7 +62,7 @@ gem "jwt", "~> 2.10", ">= 2.10.1"
 gem "redis", "~> 5.4"
 
 # Agnostic pagination in plain ruby. It does it all. Better.
-gem 'pagy', '~> 9.3', '>= 9.3.3'
+gem 'pagy', '~> 43.1'
 
 # Use Sidekiq for background job processing
 gem 'sidekiq', '~> 7.3', '>= 7.3.9'
