@@ -65,4 +65,4 @@ gem "redis", "~> 5.4"
 gem 'pagy', '~> 9.3', '>= 9.3.3'
 
 # Use Sidekiq for background job processing
-gem 'sidekiq', '~> 7.3', '>= 7.3.9'
+gem 'sidekiq', '~> 8.0'
